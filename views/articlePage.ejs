@@ -1,0 +1,11 @@
+<%- include("./layout/header.ejs")%>
+ <div class="container">
+    <h1 class="text-center"><%= articleInfo.title %>
+        <% if(islogin && userInfo.username === articleInfo.author) {%>
+    <a href="/article/edit/<%= articleInfo.id %>" class="btn btn-info pull-right">编辑</a></a>
+    <% }%>
+    </h1>
+     <hr>
+     <div><%- articleInfo.article %></div>
+ </div>
+<%- include("./layout/footer.ejs")%>

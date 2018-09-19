@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/base.css">
+
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <!-- <script src="/public/js/template.js"></script> -->
+    <!-- <script src="/public/js/index.js"></script> -->
+    <!-- <script type="text/template" id="indexTpl">
+      {{each list}}
+        <tr>
+          <td>{{$value.id}}</td>
+          <td><a href="javascript:;">{{$value.article}}</a></td>
+          <td>{{$value.author}}</td>
+          <td>{{$value.createTime}}</td>
+          <td>
+            <a href="javascript:;">编辑</a>|
+            <a href="javascript:;">删除</a>
+          </td>
+        </tr>
+      {{/each}}
+    </script> -->
+
+</head>
+<body>
+    <!-- 导航条 -->
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/"><img src="/public/images/icon.jpg" width="30px"></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <!-- <span class="sr-only">Toggle navigation</span> -->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">轻博客 <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">个人信息</a></li>
+            </ul>
+            <!-- <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">搜索</button>
+            </form> -->
+            <% if(islogin){ %>
+            <div class="nav navbar-form navbar-nav navbar-right">
+                <button class="btn btn-warning" id="welcome">欢迎<strong> <%= userInfo.username %> </strong></button>
+                <a class="btn btn-danger" href="/logout"id="logout">注销</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发表文章 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/article/add">文章</a></li>
+                    <li><a href="#">留言</a></li>
+                  </ul>
+                </li>
+            </ul>
+            <% }else{ %>
+            <div class="nav navbar-form navbar-nav navbar-right">
+                <a class="btn btn-success" href="/login" id="login">登录</a>
+                <a class="btn btn-primary" href="/register" id="register">注册</a>
+            </div>
+            <% } %>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <style>
+        .content {
+            margin: 100px auto;
+            width: 400px;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+        .content h3,form {
+            text-align: center;
+        }
+        form {
+            position: relative;
+        }
+        form input {
+            width: 300px;
+            height: 40px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding-left:50px;
+            box-sizing: border-box;
+        }
+        .imgUser,
+        .imgPs,
+        .imgCf {
+            width: 40px;
+            position: absolute;
+        }
+        .imgUser {
+            top:0;
+            left: 49px;
+        }
+        .imgPs {
+            top:50px;
+            left: 49px;
+        }
+        .imgCf {
+            top:100;
+            left: 49px;
+        }
+        input[type=submit] {
+            margin-top: 30px;
+            padding:0;
+            border: none;
+            /* width: 250px; */
+            background-color: #222;
+            color: #fff;
+            font-size: 18px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+    </style>
+    <script src="/public/js/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="content">
+    <h3>注册</h3>
+    <form id="form" method="POST">
+        <img src="/public/images/username.png" class="imgUser">
+        <input type="text" name="username" placeholder="用户名"><br>
+        <img src="/public/images/passwd.png" class="imgPs">
+        <input type="password" name="password"placeholder="密码"><br>
+        <img src="/public/images/username.png" class="imgCf">
+        <input type="text" name="nickname"placeholder="昵称"><br>
+        <input type="submit" value="注册">
+    </form>
+    </div>
+</body>
+<script>
+    $(function (){
+        $("#form").on("submit",function(e) {
+            console.log('ok')
+            e.preventDefault()//取消默认行为
+            $.ajax({
+                url: '/register',
+                data: $('#form').serialize(),
+                type:"POST",
+                dataType: "json",
+                success: function(result){
+                    console.log(result)
+                    if (result.status !== 200) {
+                        return alert(result.msg)
+                    }
+                   location.href = '/login'
+                }
+            })
+
+        })
+    })
+</script>
+</html>

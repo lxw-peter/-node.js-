@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <style>
+        .content {
+            margin: 100px auto;
+            width: 400px;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+        .content h3,form {
+            text-align: center;
+        }
+        form {
+            position: relative;
+        }
+        form input {
+            width: 300px;
+            height: 40px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding-left:50px;
+            box-sizing: border-box;
+        }
+        .imgUser,
+        .imgPs {
+            width: 40px;
+            position: absolute;
+        }
+        .imgUser {
+            top:0;
+            left: 49px;
+        }
+        .imgPs {
+            top:50px;
+            left: 49px;
+        }
+        input[type=submit] {
+            margin-top: 30px;
+            padding:0;
+            border: none;
+            /* width: 250px; */
+            background-color: #222;
+            color: #fff;
+            font-size: 18px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+        .toRegister {
+            margin-left: 235px;
+        }
+    </style>
+    <script src="/public/js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="content">
+    <h3>登录</h3>
+    <form id="form" method="POST">
+        <img src="/public/images/username.png" class="imgUser">
+        <input type="text" name="username" placeholder="用户名"><br>
+        <img src="/public/images/passwd.png" class="imgPs">
+        <input type="password" name="password"placeholder="密码"><br>
+        <input type="submit" value="登录">
+        <div class="toRegister"><a href="/register">免费注册</a></div>
+    </form>
+    </div>
+</body>
+<script>
+    $(function () {
+        $('#form').on('submit',function(e){
+            console.log('login...')
+            e.preventDefault()
+            $.ajax({
+            url: '/login',
+            data: $('#form').serialize(),
+            type: 'POST',
+            dataType:'json',
+            success: function (result){
+                console.log(result)
+                if (result.status !==200) {
+                    return alert(result.msg)
+                }
+                location.href = '/'
+            }
+        })
+        })
+        
+    })
+</script>
+</html>
