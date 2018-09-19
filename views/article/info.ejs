@@ -1,4 +1,4 @@
-<%- include("./layout/header.ejs")%>
+<%- include("../layout/header.ejs")%>
  <div class="container">
     <h1 class="text-center"><%= articleInfo.title %>
         <% if(islogin && userInfo.username === articleInfo.author) {%>
@@ -8,4 +8,4 @@
      <hr>
      <div><%- articleInfo.article %></div>
  </div>
-<%- include("./layout/footer.ejs")%>
+<%- include("../layout/footer.ejs")%>

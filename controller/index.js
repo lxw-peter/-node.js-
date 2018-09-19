@@ -1,6 +1,6 @@
 /* jshint esversion:6 */
 // const path = require('path')
-const db = require('../db')
+const connect = require('../db')
 // 展示首页页面
 const showIndex = (req, res) =>{
     // 每页文章列表数
@@ -10,16 +10,15 @@ const showIndex = (req, res) =>{
 
     let sql = `select * from articles limit ${(nowPage-1)*pagesize}, ${pagesize};
     select count(* ) as count from articles `
-    db.base(sql,null,(result) =>{
+    connect.query(sql,null,(err,result) =>{
         // 总页数
-        const totalPages = Math.ceil(result[1][0].count / pagesize)
-        if (result.length !== 2) {
-            return res.render('index.ejs', {
+        if (err) {return res.render('index.ejs', {
                 userInfo: req.session.userInfo,
                 islogin: req.session.islogin,
                 articlesList: [],
             })
         } else {
+        const totalPages = Math.ceil(result[1][0].count / pagesize)
         res.render('index.ejs', {
                 userInfo: req.session.userInfo,
                 islogin: req.session.islogin,

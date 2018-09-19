@@ -8,8 +8,7 @@ const service = require('../controller/index.js')
 // 路由处理
 // 首页
 router.get('/', service.showIndex)
-// 首页文章渲染
-// router.post('/',service.allArticles)
+
 // 注销
 router.get('/logout', service.logout)
 
