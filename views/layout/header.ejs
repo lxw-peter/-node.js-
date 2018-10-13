@@ -35,7 +35,11 @@
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"><img src="/public/images/icon.jpg" width="30px"></a>
+            <a class="navbar-brand" href="/">
+              <!-- 如果用户信息存在，即已登录，则图片地址为userInfo.headImg -->
+              <img width="30px" height="30px" class='headImg' 
+              src=<%= userInfo && userInfo.headImg ? userInfo.headImg:"/public/images/icon.jpg" %> >
+            </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <!-- <span class="sr-only">Toggle navigation</span> -->
                 <span class="icon-bar"></span>
@@ -47,7 +51,9 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">轻博客 <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">个人信息</a></li>
+              <% if(islogin) {%>
+              <li><a href="/userInfo">个人信息</a></li>
+              <% } %>
             </ul>
             <!-- <form class="navbar-form navbar-left">
               <div class="form-group">

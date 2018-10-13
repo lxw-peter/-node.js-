@@ -1,0 +1,130 @@
+<%- include("./layout/header.ejs")%>
+<style>
+    h1 {
+        font-size: 30px;
+        line-height: 30px;
+        margin-bottom: 20px;
+    }
+    .items {
+        height: 95px;
+        width: 100%;
+        border: 1px solid #eee;
+        padding: 10px 0;
+        box-sizing: border-box;
+    }
+    .items .item {
+        float: left;
+        width: 120px;
+        height: 100%;
+        line-height: 75px;
+        font-size: 14px;
+    } 
+    @media screen and (max-width:500px) {
+        .items .item {
+            width: 60px;
+        }
+    }
+    .items .content {
+        width: 100%;
+        /* min-width: 340px; */
+        height: 100%;
+        margin: 0 20px;
+        position: relative;
+    }
+    .content .img {
+        float: left;
+        margin-right: 10px;
+    }
+    .content .img  img {
+        width: 74px;
+        height: 74px;
+    }
+    .content .text p {
+        font-size: 12px;
+        color: #909090;
+        margin-bottom: 20px;
+    }
+    @media screen and (max-width: 365px) {
+        .content .text p {
+            padding-right: 10px;
+            margin-bottom: 5px;
+
+        }
+    }
+    .content #form input {
+        width: 80px;
+        height: 30px;
+        background-color: #007fff;
+        border: none;
+        color: #fff;
+    }
+    .content #form input[type='file'] {
+        position: absolute;
+        top: 40px;
+        left: 200px;
+        opacity: 0;
+    }
+    @media screen and (max-width: 500px) {
+        .content #form input[type='file'] {
+            position: absolute;
+            top: 44px;
+            left: 137px;
+        }
+    }
+    /* @media screen and (max-width: 340px) {
+        .content #form #btn {
+            width: 40px;
+        }
+    } */
+</style>
+<div class="container">
+    <h1>个人资料</h1>
+    <div class="items">
+        <div class="item">头像</div>
+        <div class="content">
+            <div class="img">
+                <img src=<%=userInfo && userInfo.headImg? userInfo.headImg:"./public/images/icon.jpg" %> alt="" class="headImg">
+            </div>
+            <div class="text">
+                <p>支持jpg、png格式大小5M以内的图片</p>  
+            </div>
+            <form id="form">
+                <input type="button" value="选择头像">
+                <input type="file" >
+                <input type="submit" id="btn" value="点击上传">
+            </form>
+            
+        </div>    
+    </div>
+</div>
+<script>
+    $(function(){
+        var headImg;
+        $('#btn').on('click',function(){
+            var formData = new FormData();
+            var imgInfo = $('input[type=file]')[0].files[0];
+            console.log(imgInfo);
+            formData.append('file',imgInfo);
+            $.ajax({
+                url: '/userInfo',
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // console.log(data)
+                    headImg = data.headImg;
+                    // 自动刷新页
+                    location.reload();
+                }
+            })
+            return false;
+        } )
+        // 定义属性
+        $('.headImg').attr('src',headImg)
+
+    })
+        
+    
+</script>
+<%- include("./layout/footer.ejs")%>

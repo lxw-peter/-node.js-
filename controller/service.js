@@ -2,8 +2,43 @@
 const connect = require('../db')
 const moment = require('moment')
 const marked = require('marked')
+const formidable = require('formidable')
+const path = require('path')
+const fs = require('fs')
 // 导入加密模块
 const bcrypt = require('bcrypt')
+// 更新用户信息
+const updateUserInfo = (req,res) => {
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./upload/images";
+    form.keepExtensions = true;
+    form.parse(req, function(err, fields, files) {
+        console.log(files)
+        console.log(req.session.userInfo)
+        var oldName = files.file.path;
+        // 文件路径
+        var newName = path.join(path.dirname(oldName) + '\\' +req.session.userInfo.id + path.extname(oldName))
+        fs.rename(oldName, newName);
+        // 将图片信息整合到个人信息中
+        // 更新数据
+        const sql = `update users set headImg=? where id=?`;
+        const  id = req.session.userInfo.id;
+        // 图片请求路径
+        const imgPath = '\\' + newName;
+        connect.query(sql,[imgPath,id], (err,result) => {
+            console.log(err)
+            console.log(result)
+            if (result.affectedRows === 1) {
+                res.send({msg:'用户头像保存成功',status: 200,headImg:imgPath})
+            } else {
+                res.send({msg:'用户头像保存失败',status: 508,headImg:''})
+
+            }
+        })
+        
+    });
+
+}
 // 登录页面提交表单
 const login = (req,res) => {
     const body = req.body
@@ -14,7 +49,7 @@ const login = (req,res) => {
     // 查询用户名和密码是否匹配
     const sql1 = 'select * from users where username=?'
     connect.query(sql1,body.username,(err,result) => {
-        console.log(err)
+        // console.log(err)
         if (err) return res.send({msg: '用户名错误', status: 505})
         if (result.length !== 1) return res.send({ msg: '该用户不存在', status: 502 })
         bcrypt.compare(body.password,result[0].password,(err,compareResult) =>{
@@ -132,6 +167,7 @@ const deleteArticle = (req,res) => {
 // TODO
 }
 module.exports = {
+    updateUserInfo,
     login,
     register,
     addArticlePage,

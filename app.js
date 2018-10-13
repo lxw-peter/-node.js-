@@ -21,6 +21,7 @@ app.set('view engine', 'ejs')
 app.set('views', './views')
 // 静态资源托管
 app.use('/public',express.static('./public'))
+app.use('/upload',express.static('./upload'))
 app.use(bodyParser.urlencoded({ extended:true }))
 // 使用循环将路由模块自动注册
 fs.readdir(path.join(__dirname,'./router'), (err, filenames) => {
@@ -31,7 +32,7 @@ fs.readdir(path.join(__dirname,'./router'), (err, filenames) => {
     })
 })
 
-app.listen(3000, () =>{
-    console.log('running:http://localhost:3000')
+app.listen(3100, () =>{
+    console.log('running:http://localhost:3100')
 })
 

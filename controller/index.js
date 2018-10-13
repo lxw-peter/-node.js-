@@ -7,9 +7,11 @@ const showIndex = (req, res) =>{
     const pagesize = 5
     // 当前页
     const nowPage = Number(req.query.page) || 1
-
+    // console.log(nowPage)
+    console.log(req.session.userInfo) 
+    // 数据库倒序排列
     let sql = `select * from articles limit ${(nowPage-1)*pagesize}, ${pagesize};
-    select count(* ) as count from articles `
+    select count(* ) as count from articles order by id desc`
     connect.query(sql,null,(err,result) =>{
         // 总页数
         if (err) {return res.render('index.ejs', {
@@ -24,9 +26,16 @@ const showIndex = (req, res) =>{
                 islogin: req.session.islogin,
                 articlesList: result[0],
                 totalPages: totalPages,
-                nowPage: nowPage
+                nowPage: nowPage,
             })
         }
+    })
+}
+// 个人信息页
+const showUserInfo = (req,res) => {
+    res.render('userInfo.ejs',{
+        userInfo: req.session.userInfo,
+        islogin: req.session.islogin,
     })
 }
 const logout = (req,res) => {
@@ -46,6 +55,7 @@ const toLogin = (req, res) => {
 }
 module.exports  = {
     showIndex,
+    showUserInfo,
     toRegister,
     toLogin,
     logout
